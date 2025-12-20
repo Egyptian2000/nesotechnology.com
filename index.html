@@ -29,6 +29,7 @@
             font-family: var(--font-family);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            width: 100%;
             overflow-x: hidden;
         }
 
@@ -36,7 +37,7 @@
         .hero {
             position: relative;
             height: 100vh;
-            width: 100vw;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -45,28 +46,18 @@
             background-color: var(--bg-color); 
         }
 
-        /* YouTube Background Container */
+        /* Video Background Styling */
         .video-background {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 100vw;
-            height: 100vh;
-            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
             z-index: -2;
-            pointer-events: none; /* Prevents clicking on the video */
-        }
-
-        /* The actual iframe scaled to cover the screen */
-        .video-background iframe {
-            width: 100vw;
-            height: 56.25vw; /* 16:9 Aspect Ratio */
-            min-height: 100vh;
-            min-width: 177.77vh; /* 16:9 Aspect Ratio */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: cover; /* Ensures video covers screen without stretching */
         }
 
         /* Logo Styling */
@@ -74,7 +65,7 @@
             position: absolute;
             top: 1.5rem;
             left: 1.5rem;
-            width: 140px; /* Scaled down for mobile */
+            width: 180px;
             height: auto;
             z-index: 10;
         }
@@ -89,7 +80,7 @@
 
         .hero-content {
             padding: var(--spacing-unit);
-            max-width: 90%;
+            max-width: 800px;
             z-index: 1;
             animation: fadeIn 1.5s ease-out;
         }
@@ -98,15 +89,14 @@
         .content-wrapper {
             max-width: 600px;
             margin: 0 auto;
-            padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
+            padding: calc(var(--spacing-unit) * 3) var(--spacing-unit);
             text-align: center;
         }
 
         .about-text {
-            font-size: 0.9rem;
-            letter-spacing: 0.1em;
+            font-size: 1.1rem;
             color: var(--text-muted);
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .signup-form {
@@ -119,19 +109,22 @@
         input[type="email"] {
             width: 100%;
             max-width: 320px;
-            padding: 14px 16px;
+            padding: 12px 16px;
             border: 1px solid #333;
-            background-color: rgba(17, 17, 17, 0.8);
+            background-color: #111;
             color: white;
             border-radius: 4px;
             font-size: 1rem;
             outline: none;
+            transition: border-color 0.3s;
         }
+
+        input[type="email"]:focus { border-color: var(--accent-color); }
 
         button {
             width: 100%;
             max-width: 320px;
-            padding: 14px 24px;
+            padding: 12px 24px;
             background-color: var(--accent-color);
             color: black;
             border: none;
@@ -142,23 +135,32 @@
             transition: opacity 0.3s;
         }
 
+        button:hover { opacity: 0.9; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .message { margin-top: 1rem; font-size: 0.9rem; height: 1.2rem; }
+        .success { color: #4caf50; }
+        .error { color: #f44336; }
+
         footer {
             text-align: center;
             padding: var(--spacing-unit);
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: #555;
-        }
-
-        /* --- Mobile Optimizations --- */
-        @media (max-width: 600px) {
-            .logo { width: 110px; top: 1rem; left: 1rem; }
-            .hero-content nav a { margin: 0 8px !important; font-size: 0.8rem; }
-            .about-text { font-size: 0.75rem; }
+            margin-bottom: var(--spacing-unit);
         }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .logo { width: 120px; top: 1rem; left: 1rem; }
+            .hero-content nav a { margin: 0 10px !important; font-size: 0.9rem; }
+            /* Ensure video covers full height on mobile */
+            .video-background { height: 100vh; }
         }
     </style>
 </head>
@@ -167,19 +169,21 @@
     <header class="hero">
         <img src="logo.png" alt="Neso Technology Logo" class="logo">
 
-        <div class="video-background">
-            <iframe 
-                src="https://www.youtube.com/embed/WJ6oafq7QfA?autoplay=1&mute=1&loop=1&playlist=WJ6oafq7QfA&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1" 
-                frameborder="0" 
-                allow="autoplay; fullscreen" 
-                allowfullscreen>
-            </iframe>
-        </div>
-
+        <video 
+            class="video-background" 
+            playsinline 
+            autoplay 
+            muted 
+            loop 
+            id="bgVideo">
+            <source src="Brain.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
         <div class="overlay"></div>
         
         <div class="hero-content">
-            <nav>
+            <nav style="margin-top: 20px;">
                 <a href="index.html" style="color: white; margin: 0 15px; text-decoration: none; font-weight: 600;">HOME</a>
                 <a href="about.html" style="color: white; margin: 0 15px; text-decoration: none; font-weight: 600;">ABOUT</a>
             </nav>
@@ -188,7 +192,7 @@
 
     <main class="content-wrapper">
         <section class="about-section">
-            <p class="about-text">SOUNDS | NEUROSCIENCE | MACHINE LEARNING</p>
+            <p class="about-text">SOUND | NEUROSCIENCE | MACHINE LEARNING</p>
         </section>
 
         <section class="signup-section">
@@ -196,7 +200,7 @@
                 <input type="email" id="email" name="email" placeholder="Enter your email" required>
                 <button type="submit">Sign up for updates</button>
             </form>
-            <div id="formMessage" style="margin-top: 1rem; font-size: 0.9rem;"></div>
+            <div id="formMessage" class="message" role="alert"></div>
         </section>
     </main>
 
@@ -208,13 +212,26 @@
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('signupForm');
             const messageDiv = document.getElementById('formMessage');
+            const video = document.getElementById('bgVideo');
             const formEndpoint = "https://formspree.io/f/xovgoljy"; 
+
+            // Force Video Play (Helps with some mobile browsers)
+            if(video) {
+                video.muted = true; // Essential for autoplay
+                video.play().catch(e => console.log("Autoplay blocked/failed:", e));
+            }
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const emailInput = document.getElementById('email');
                 const btn = form.querySelector('button');
-                
+                const originalText = btn.innerText;
+
+                if (!emailInput.value || !emailInput.value.includes('@')) {
+                    setMessage('Please enter a valid email.', 'error');
+                    return;
+                }
+
                 btn.disabled = true;
                 btn.innerText = "Sending...";
 
@@ -228,17 +245,24 @@
                     if (response.ok) {
                         btn.innerText = "Signed Up";
                         emailInput.value = '';
-                        messageDiv.innerHTML = "<span style='color: #4caf50;'>Success! You have been added.</span>";
+                        setMessage('Thank you. You have been added.', 'success');
+                        setTimeout(() => { btn.disabled = false; btn.innerText = originalText; }, 3000);
                     } else {
-                        messageDiv.innerHTML = "<span style='color: #f44336;'>Error sending request.</span>";
+                        setMessage('Error signing up.', 'error');
                         btn.disabled = false;
-                        btn.innerText = "Sign up for updates";
+                        btn.innerText = originalText;
                     }
                 } catch (error) {
-                    messageDiv.innerHTML = "<span style='color: #f44336;'>Connection failed.</span>";
+                    setMessage('Connection failed.', 'error');
                     btn.disabled = false;
+                    btn.innerText = originalText;
                 }
             });
+
+            function setMessage(msg, type) {
+                messageDiv.textContent = msg;
+                messageDiv.className = `message ${type}`;
+            }
         });
     </script>
 </body>
