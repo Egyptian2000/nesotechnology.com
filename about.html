@@ -3,139 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Neso Technology Inc.</title>
+    <title>About Us - Neso Technology</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Shared Styles matching Index */
+        /* --- Shared Styles (Matches Homepage) --- */
         :root {
             --bg-color: #02090E; 
             --text-color: #f0f0f0;
+            --text-muted: #a0a0a0;
             --accent-color: #ffffff;
-            --overlay-color: rgba(2, 9, 14, 0.75);
-            --font-family: "Inter", sans-serif;
+            --card-bg: #0b161d;
+            --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
             --spacing-unit: 2rem;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body, html {
+        body {
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: var(--font-family);
             line-height: 1.6;
-            width: 100%;
-            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Shorter Hero for About Page */
-        .hero {
-            position: relative;
-            height: 60vh;
-            width: 100%;
+        a { text-decoration: none; transition: color 0.3s; }
+
+        /* --- Navigation (Consistent with Home) --- */
+        .navbar {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            padding: 1.5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            width: 120px;
+            height: auto;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            margin-left: 1.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .nav-links a:hover { color: var(--text-muted); }
+
+        /* --- Page Header --- */
+        .page-header {
             text-align: center;
-            background-color: var(--bg-color);
-        }
-
-        .video-background {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -2;
-            transform: translateX(-50%) translateY(-50%);
-            object-fit: cover;
-        }
-
-        .logo {
-            position: absolute;
-            top: 1.5rem;
-            left: 1.5rem;
-            width: 180px;
-            height: auto;
-            z-index: 10;
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: var(--overlay-color);
-            z-index: -1;
-        }
-
-        .hero-content {
-            z-index: 1;
+            padding: 4rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease-out;
         }
 
         h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 700;
             margin-bottom: 1rem;
         }
 
-        .content-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
+        .lead-text {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            font-weight: 300;
         }
 
-        .about-body {
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
+        /* --- Team Sections --- */
+        .section-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 4rem 0 2rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #333;
+            display: inline-block;
+            padding-bottom: 0.5rem;
         }
-        .about-body p { margin-bottom: 1.5rem; }
+
+        .section-container {
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Responsive Grid Layout */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        /* Member Card Styling */
+        .team-card {
+            background-color: var(--card-bg);
+            border: 1px solid #1a262f;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: left;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            border-color: #333;
+        }
+
+        .member-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 2px solid var(--text-muted);
+        }
+
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .member-role {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .member-bio {
+            font-size: 0.95rem;
+            color: #ccc;
+            line-height: 1.5;
+        }
 
         footer {
             text-align: center;
-            padding: var(--spacing-unit);
+            padding: 2rem;
             font-size: 0.85rem;
             color: #555;
+            margin-top: 2rem;
             border-top: 1px solid #111;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Tweaks */
         @media (max-width: 600px) {
-            .logo { width: 120px; top: 1rem; left: 1rem; }
-            .hero { height: 40vh; }
-            .hero-content nav a { margin: 0 10px !important; font-size: 0.9rem; }
-            .video-background { height: 100vh; }
+            .navbar { padding: 1rem; }
+            .team-grid { grid-template-columns: 1fr; } /* Stack vertically on phones */
+            .team-card { text-align: center; } /* Center text on phones */
+            .member-img { margin: 0 auto 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <header class="hero">
-        <a href="index.html"><img src="logo.png" alt="Neso Technology Logo" class="logo"></a>
-
-        <video 
-            class="video-background" 
-            playsinline 
-            autoplay 
-            muted 
-            loop>
-            <source src="Brain.mp4" type="video/mp4">
-        </video>
-
-        <div class="overlay"></div>
-        
-        <div class="hero-content">
-            <h1>About Us</h1>
-            <nav>
-                <a href="index.html" style="color: white; margin: 0 15px; text-decoration: none; font-weight: 600;">HOME</a>
-                <a href="about.html" style="color: white; margin: 0 15px; text-decoration: none; font-weight: 600; border-bottom: 2px solid white;">ABOUT</a>
-            </nav>
+    <nav class="navbar">
+        <a href="index.html">
+            <img src="logo.png" alt="Neso Technology" class="nav-logo">
+        </a>
+        <div class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="about.html" style="color: white; border-bottom: 1px solid white;">ABOUT</a>
         </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Pioneering Neuroscience</h1>
+        <p class="lead-text">Neso Technology is pioneering novel neuroscience techniques.</p>
     </header>
+
+    <main>
+        
+        <div class="section-container">
+            <h2 class="section-title">Core Team</h2>
+            
+            <div class="team-grid">
+                
+                <div class="team-card">
+                    <img src="team_navid.jpg" alt="Dr Navid Banafshe" class="member-img">
+                    <h3 class="member-name">Dr Navid Banafshe</h3>
+                    <p class="member-role">Founder, CEO, CSO</p>
+                    <p class="member-bio">
+                        Navid is an auditory neuroscientist with 10 years’ experience in neuroscience. 
+                        He founded Neso Technology after completing his PhD from King’s College London in 2021 (Marie Curie PhD Fellowship).
+                        He has authored five publications featured in scientific journals.
+                    </p>
+                </div>
+
+                <div class="team-card">
+                    <img src="team_dominic.jpg" alt="Dr Dominic Burrows" class="member-img">
+                    <h3 class="member-name">Dr Dominic Burrows</h3>
+                    <p class="member-role">Machine Learning</p>
+                    <p class="member-bio">
+                        Dominic leads machine learning research at Neso Technology with over 10 years’ experience in AI and neuroscience.
+                        PhD in Computational Neuroscience from King’s College London. He is also an Honorary Research Fellow at UCL and co-lead lecturer on Data Science for Neuroscience.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section-container">
+            <h2 class="section-title">Scientific Advisors</h2>
+
+            <div class="team-grid">
+                
+                <div class="team-card">
+                    <img src="advisor_marlies.jpg" alt="Marlies Pinnow" class="member-img">
+                    <h3 class="member-name">Dr. Marlies Pinnow</h3>
+                    <p class="member-role">Scientific Advisor</p>
+                    <p class="member-bio">
+                        Former Head of the Motivation Lab at Ruhr-University Bochum, Germany. 
+                        Her research focuses on Motivational Psychology, including the interaction between motivation, emotion, and volition. 
+                        Over 30 years’ experience in psychology and neuroscience.
+                    </p>
+                </div>
+
+                <div class="team-card">
+                    <img src="advisor_jorg.jpg" alt="Prof. Dr. Jörg Lewald" class="member-img">
+                    <h3 class="member-name">Prof. Dr. Jörg Lewald</h3>
+                    <p class="member-role">Scientific Advisor</p>
+                    <p class="member-bio">
+                        Head of the Auditory Cognitive Neuroscience Lab at Ruhr-University Bochum since 1996. 
+                        Expert in auditory stimulation, sound localization, and multisensory integration. 
+                        Authored over 30 publications in cognitive neuroscience over the last 40 years.
+                    </p>
+                </div>
+
+                <div class="team-card">
+                    <img src="advisor_christian.jpg" alt="Prof. Dr. Christian Mette" class="member-img" onerror="this.style.display='none'">
+                    <h3 class="member-name">Prof. Dr. Christian Mette</h3>
+                    <p class="member-role">Scientific Advisor</p>
+                    <p class="member-bio">
+                        Professor of Psychology with expertise in ADHD. 
+                        His research focuses on adult ADHD, neurophysiological mechanisms, and time perception.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
 
     <footer>
         <small>&copy; Neso Technology Inc. All rights reserved.</small>
