@@ -1,16 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>About - Neso Technology</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Neso Technology Inc.</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        body { background-color: #050505; color: #f0f0f0; font-family: "Inter", sans-serif; text-align: center; padding-top: 50px; }
-        a { color: #fff; text-decoration: none; border-bottom: 1px solid #fff; }
+        /* --- CSS Reset & Variables --- */
+        :root {
+            --bg-color: #02090E; 
+            --text-color: #f0f0f0;
+            --text-muted: #a0a0a0;
+            --accent-color: #ffffff;
+            --overlay-color: rgba(2, 9, 14, 0.75); /* Slightly darker for readability */
+            --font-family: "Inter", sans-serif;
+            --spacing-unit: 2rem;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body, html {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* --- Hero Section (Matches Index) --- */
+        .hero {
+            position: relative;
+            height: 60vh; /* Shorter than home page to focus on content */
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 100vh;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .video-background iframe {
+            width: 100vw;
+            height: 56.25vw;
+            min-height: 100vh;
+            min-width: 177.77vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .logo {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            width: 140px;
+            height: auto;
+            z-index: 10;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: var(--overlay-color);
+            z-index: -1;
+        }
+
+        .hero-content {
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Content Area --- */
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
+        }
+
+        .about-body {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-bottom: 3rem;
+        }
+
+        .about-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: var(--spacing-unit);
+            font-size: 0.75rem;
+            color: #555;
+            border-top: 1px solid #111;
+        }
+
+        /* --- Mobile Optimizations --- */
+        @media (max-width: 600px) {
+            .logo { width: 110px; top: 1rem; left: 1rem; }
+            .hero { height: 40vh; }
+            .hero-content nav a { margin: 0 8px !important; font-size: 0.8rem; }
+            .about-body { font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
-    <h1>About Us</h1>
-    <p>This page is under construction.</p>
-    <br>
-    <a href="index.html">← Back to Home</a>
+
+    <header class="hero">
+        <a href="index.html"><img src="logo.png" alt="Neso Technology Logo" class="logo"></a>
+
+        <div class="video-background">
+            <iframe 
+                src="https://www.youtube.com/embed/WJ6oafq7QfA?autoplay=1&mute=1&loop=1&playlist=WJ6oafq7QfA&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1" 
+                frameborder="0" 
+                allow="autoplay; fullscreen">
+            </iframe>
+        </div>
+
+        <div class="overlay"></div>
+        
+        <div class="hero-content">
+            <h1>About Us</h1>
+            <nav>
+                <a href="index.html" style="color: white; margin: 0 15px; text-decoration: none; font-weight: 600;">HOME</a>
+                <a href="about.html" style="color: white; margin: 0 15px; text-decoration: none; font-weight: 600; border-bottom: 2px solid white;">ABOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content-wrapper">
+        <section class="about-body">
+            <p>Neso Technology Inc. is at the intersection of <strong>Sounds</strong>, <strong>Neuroscience</strong>, and <strong>Machine Learning</strong>.</p>
+            <p>We are dedicated to exploring how advanced neural scan technologies and computational models can unlock new understanding of the human brain's relationship with auditory stimuli.</p>
+            <p>Our mission is to pioneer next-generation interfaces and technologies that redefine our cognitive potential.</p>
+        </section>
+    </main>
+
+    <footer>
+        <small>&copy; Neso Technology Inc. All rights reserved.</small>
+    </footer>
+
 </body>
 </html>
