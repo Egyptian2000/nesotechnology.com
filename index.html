@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neso Technology Inc.</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Reset & Variables --- */
+        :root {
+            --bg-color: #02090E; 
+            --text-color: #f0f0f0;
+            --text-muted: #a0a0a0;
+            --accent-color: #ffffff;
+            --overlay-color: rgba(2, 9, 14, 0.65);
+            --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            --spacing-unit: 2rem;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
+            background-color: var(--bg-color); 
+        }
+
+        /* Logo Styling */
+        .logo {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            width: 180px;
+            height: auto;
+            z-index: 10;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: var(--overlay-color);
+            z-index: -1;
+        }
+
+        .hero-content {
+            padding: var(--spacing-unit);
+            max-width: 800px;
+            z-index: 1;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* H1 Removed but style kept if needed later */
+        h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subheadline {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* --- Content --- */
+        .content-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: calc(var(--spacing-unit) * 3) var(--spacing-unit);
+            text-align: center;
+        }
+
+        .about-section, .signup-section {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Form --- */
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            max-width: 320px;
+            padding: 12px 16px;
+            border: 1px solid #333;
+            background-color: #111;
+            color: white;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: var(--font-family);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="email"]:focus { border-color: var(--accent-color); }
+
+        button {
+            padding: 12px 24px;
+            background-color: var(--accent-color);
+            color: black;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: var(--font-family);
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.1s;
+        }
+
+        button:hover { opacity: 0.9; }
+        button:active { transform: scale(0.98); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .message {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            height: 1.2rem;
+        }
+        .success { color: #4caf50; }
+        .error { color: #f44336; }
+
+        footer {
+            text-align: center;
+            padding: var(--spacing-unit);
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: var(--spacing-unit);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .video-background { display: none; }
+            .hero { background: #02090E linear-gradient(to bottom, #05141e, #02090E); }
+            .hero-content { animation: none; }
+        }
+
+        @media (min-width: 600px) {
+            .signup-form { flexDirection: row; justify-content: center; }
+            button { width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <img src="logo.png" alt="Neso Technology Logo" class="logo">
+
+        <video 
+            class="video-background" 
+            playsinline 
+            autoplay 
+            muted 
+            loop 
+            poster="poster.jpg"
+            id="bgVideo">
+            <source src="Dynamic_Brain_Scan_Video_Generation.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <nav style="margin-top: 20px;">
+                <a href="index.html" style="color: white; margin: 0 15px; text-decoration: none; font-weight: 600;">HOME</a>
+                <a href="about.html" style="color: white; margin: 0 15px; text-decoration: none; font-weight: 600;">ABOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content-wrapper">
+        <section class="about-section" aria-label="About">
+            <p class="about-text">SOUNDS | NEUROSCIENCE | MACHINE LEARNING</p>
+        </section>
+
+        <section class="signup-section" aria-label="Newsletter Signup">
+            <form id="signupForm" class="signup-form" novalidate>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Enter your email" 
+                    aria-label="Email Address" 
+                    required>
+                <button type="submit">Sign up for updates</button>
+            </form>
+            <div id="formMessage" class="message" role="alert"></div>
+        </section>
+    </main>
+
+    <footer>
+        <small>&copy; Neso Technology Inc. All rights reserved.</small>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('signupForm');
+            const messageDiv = document.getElementById('formMessage');
+            const video = document.getElementById('bgVideo');
+
+            // --- CONFIGURATION ---
+            // Formspree Integration Link
+            const formEndpoint = "https://formspree.io/f/xovgoljy"; 
+
+            // Video Auto-play handler
+            if(video) {
+                video.playbackRate = 1.0;
+                video.play().catch(() => {
+                    console.log("Autoplay prevented by browser policy.");
+                });
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const emailInput = document.getElementById('email');
+                const emailValue = emailInput.value.trim();
+                const btn = form.querySelector('button');
+                
+                // 1. Validation
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailValue) return setMessage('Please enter an email address.', 'error');
+                if (!emailPattern.test(emailValue)) return setMessage('Please enter a valid email address.', 'error');
+                
+                // 2. UI Loading State
+                const originalText = btn.innerText;
+                btn.disabled = true;
+                btn.innerText = "Sending...";
+
+                try {
+                    // 3. Send Data to Form Service
+                    const response = await fetch(formEndpoint, {
+                        method: 'POST',
+                        body: JSON.stringify({ email: emailValue }),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Success
+                        btn.innerText = "Signed Up";
+                        emailInput.value = '';
+                        setMessage('Thank you. You have been added to our list.', 'success');
+                        
+                        // Reset button after 3 seconds
+                        setTimeout(() => {
+                            btn.disabled = false;
+                            btn.innerText = originalText;
+                        }, 3000);
+                    } else {
+                        // Network error or Formspree error
+                        const data = await response.json();
+                        if (Object.hasOwn(data, 'errors')) {
+                            setMessage(data["errors"].map(error => error["message"]).join(", "), 'error');
+                        } else {
+                            setMessage('Oops! There was a problem sending your email.', 'error');
+                        }
+                        resetButton(btn, originalText);
+                    }
+                } catch (error) {
+                    setMessage('Connection failed. Please try again.', 'error');
+                    resetButton(btn, originalText);
+                }
+            });
+
+            function resetButton(btn, originalText) {
+                btn.disabled = false;
+                btn.innerText = originalText;
+            }
+
+            function setMessage(msg, type) {
+                messageDiv.textContent = msg;
+                messageDiv.className = `message ${type}`;
+            }
+        });
+    </script>
+</body>
+</html>
