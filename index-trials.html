@@ -52,12 +52,16 @@
         }
 
         /* LOGO STYLING */
-        /* Note: If your logo.png is white text, it might be invisible on a white background. 
-           If so, you may need to use a dark version of your logo or apply a CSS filter. 
-           I have added a filter here to invert it IF it's a simple white logo. */
         .logo-container {
             text-align: center;
             margin-bottom: 30px;
+        }
+
+        /* This link wraps the image to make it clickable */
+        .logo-link {
+            display: inline-block;
+            text-decoration: none;
+            cursor: pointer;
         }
 
         .logo-img {
@@ -65,8 +69,13 @@
             height: auto;
             display: block;
             margin: 0 auto;
-            /* Remove the line below if your logo is already dark/colored */
+            /* Inverts white logo to black for the white background */
             filter: invert(1); 
+            transition: opacity 0.3s;
+        }
+
+        .logo-link:hover .logo-img {
+            opacity: 0.7; /* slight fade on hover to indicate it's clickable */
         }
 
         /* HEADLINE STYLING */
@@ -309,7 +318,7 @@
 <div class="container">
     
     <div class="logo-container">
-        <a href="index.html">
+        <a href="index.html" class="logo-link">
             <img src="logo.png" alt="Neso Logo" class="logo-img">
         </a>
     </div>
