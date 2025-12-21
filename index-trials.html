@@ -4,127 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neso Patient Registry</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
-        /* --- CSS STYLING (Dark Mode / Neuralink Style) --- */
+        /* --- CSS STYLING (Light Mode / High Accessibility) --- */
         :root {
-            --bg-color: #000000;
-            --text-color: #ffffff;
-            --border-color: #333333;
-            --accent-color: #ffffff;
-            --error-color: #ff6b6b;
-            --success-color: #51cf66;
+            /* REVERSED COLORS: White Background, Black Text */
+            --bg-color: #ffffff; 
+            --text-color: #000000;
+            --text-secondary: #333333; /* Dark Grey for less important text */
+            --text-muted: #666666;     /* Lighter Grey for helper text */
             
-            /* New Colors for Eligibility Boxes */
-            --eligible-bg: #d1e7dd;      /* Pale Green */
-            --eligible-text: #0f5132;    /* Dark Green text */
+            --border-color: #cccccc;   /* Visible light grey border */
+            --accent-color: #000000;   /* Black accent for high contrast */
+            
+            --error-color: #d32f2f;    /* Darker red for visibility on white */
+            --success-color: #2e7d32;  /* Darker green for visibility on white */
+            
+            /* Eligibility Boxes (Kept Green but adjusted for white bg) */
+            --eligible-bg: #d1e7dd;      
+            --eligible-text: #0f5132;    
             --eligible-border: #badbcc;
+            
+            /* Font Settings */
+            --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--font-family);
             margin: 0;
             padding: 40px 20px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            line-height: 1.6;
         }
 
         .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
             position: relative;
         }
 
         /* LOGO STYLING */
+        /* Note: If your logo.png is white text, it might be invisible on a white background. 
+           If so, you may need to use a dark version of your logo or apply a CSS filter. 
+           I have added a filter here to invert it IF it's a simple white logo. */
         .logo-container {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .logo-img {
-            max-width: 150px;
+            max-width: 180px;
             height: auto;
             display: block;
             margin: 0 auto;
+            /* Remove the line below if your logo is already dark/colored */
+            filter: invert(1); 
         }
 
         /* HEADLINE STYLING */
         .intro-text {
-            font-size: 12px;
-            color: #cccccc;
+            font-size: 16px;
+            color: var(--text-secondary); /* Dark Grey */
             text-align: center;
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
+            padding-bottom: 30px;
         }
 
         .intro-text a {
-            color: var(--text-color);
+            color: var(--text-color); /* Black */
             text-decoration: underline;
+            text-underline-offset: 4px;
         }
 
         /* WIZARD PROGRESS BAR */
         .progress-container {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
         .progress-bar {
-            height: 2px;
-            background-color: var(--border-color);
+            height: 4px;
+            background-color: #e0e0e0; /* Light grey track */
             width: 100%;
             position: relative;
+            border-radius: 2px;
         }
         
         .progress-fill {
             height: 100%;
-            background-color: var(--accent-color);
-            width: 0%; /* JS will change this */
+            background-color: var(--accent-color); /* Black fill */
+            width: 0%;
             transition: width 0.3s ease;
+            border-radius: 2px;
         }
 
         .step-indicator {
-            font-size: 10px;
+            font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #888;
-            margin-bottom: 5px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
+            font-weight: 600;
         }
 
         /* FORM FIELD STYLING */
         .form-group {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
         .section-header {
             margin-top: 0;
-            margin-bottom: 25px;
-            font-size: 20px;
-            font-weight: 300;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 600;
             color: var(--text-color);
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
-            font-size: 14px;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: var(--text-secondary); /* Dark Grey */
+            font-weight: 500;
         }
         
         .helper-text {
-            font-size: 12px;
-            color: #666;
+            font-size: 14px;
+            color: var(--text-muted);
             margin-top: -5px;
-            margin-bottom: 10px;
-            line-height: 1.4;
+            margin-bottom: 15px;
+            line-height: 1.5;
         }
 
+        /* INPUTS - BLACK TEXT ON WHITE */
         input[type="text"], 
         input[type="email"], 
         input[type="tel"], 
@@ -132,39 +155,49 @@
         textarea,
         select {
             width: 100%;
-            padding: 12px 0;
+            padding: 16px 0;
             background-color: transparent;
             border: none;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-color);
-            font-size: 16px;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-color); /* Black Text */
+            font-size: 18px;
             outline: none;
             border-radius: 0;
             font-family: inherit;
+            transition: border-color 0.3s;
+            -webkit-appearance: none; /* Removes default styling on iOS */
+            border-radius: 0;
+        }
+        
+        /* Ensure dropdown options are readable */
+        select option {
+            background-color: var(--bg-color);
+            color: var(--text-color);
         }
 
         textarea {
             resize: vertical;
-            min-height: 40px;
+            min-height: 60px;
         }
 
         input:focus, select:focus, textarea:focus {
             border-bottom-color: var(--accent-color);
         }
 
-        /* SPECIAL ELIGIBILITY BOXES (Pale Green) */
+        /* SPECIAL ELIGIBILITY BOXES */
         .eligibility-box {
             background-color: var(--eligible-bg);
             border: 1px solid var(--eligible-border);
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
         }
 
         .eligibility-box .checkbox-label {
             color: var(--eligible-text);
             margin-bottom: 0;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 16px;
         }
 
         .eligibility-box input[type="checkbox"] {
@@ -178,56 +211,70 @@
             cursor: pointer;
             text-transform: none;
             color: var(--text-color);
+            font-size: 16px;
+            line-height: 1.5;
         }
 
         input[type="checkbox"] {
-            width: auto;
+            width: 20px;
+            height: 20px;
             margin-right: 15px;
-            transform: scale(1.3);
             accent-color: var(--accent-color);
+            flex-shrink: 0;
+            border: 2px solid var(--border-color); /* Added border for visibility on white */
         }
 
         /* NAVIGATION BUTTONS */
         .nav-buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 40px;
+            gap: 15px;
+            margin-top: 50px;
         }
 
         button {
-            padding: 16px 32px;
+            padding: 18px 32px;
             border: none;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             text-transform: uppercase;
             cursor: pointer;
             width: 100%;
-            transition: opacity 0.2s;
+            transition: opacity 0.2s, transform 0.1s;
+            border-radius: 4px;
         }
 
         .btn-next {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
+            background-color: var(--accent-color); /* Black Button */
+            color: #ffffff; /* White Text */
         }
 
         .btn-back {
             background-color: transparent;
-            color: #888;
-            border: 1px solid #333;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-back:hover {
+            border-color: var(--text-color);
+            color: var(--text-color);
         }
 
         button:hover {
-            opacity: 0.9;
+            opacity: 0.85;
+        }
+        
+        button:active {
+            transform: translateY(1px);
         }
 
         /* WIZARD STEP LOGIC */
         .wizard-step {
-            display: none; /* Hidden by default */
+            display: none;
             animation: fadeIn 0.4s ease;
         }
 
         .wizard-step.active {
-            display: block; /* Show active */
+            display: block;
         }
 
         @keyframes fadeIn {
@@ -238,12 +285,21 @@
         /* ERROR MESSAGE */
         #error-message {
             color: var(--error-color);
-            margin-top: 15px;
-            font-size: 14px;
+            margin-top: 20px;
+            font-size: 16px;
             display: none;
             text-align: center;
             border: 1px solid var(--error-color);
-            padding: 10px;
+            padding: 15px;
+            background-color: #fdecea; /* Light red bg for error */
+            border-radius: 4px;
+        }
+
+        /* MOBILE OPTIMIZATION */
+        @media (max-width: 600px) {
+            body { padding: 20px 15px; }
+            .section-header { font-size: 22px; }
+            input[type="text"], input[type="email"], input[type="tel"] { font-size: 16px; }
         }
 
     </style>
@@ -253,11 +309,13 @@
 <div class="container">
     
     <div class="logo-container">
-        <img src="logo.png" alt="Neso Logo" class="logo-img">
+        <a href="index.html">
+            <img src="logo.png" alt="Neso Logo" class="logo-img">
+        </a>
     </div>
 
     <div class="intro-text">
-        <p>If you want to participate in non-invasive trials for methods to advance research into neurological conditions, sign up to our patient registry. We will contact you if you're eligible for paid participation in our trials.</p>
+        <p>If you want to participate in non-invasive trials for methods to advance research into neurological conditions, sign up to our patient registry and we will be in touch if you're eligible for paid participation in our trials.</p>
         <p>If you have any questions email <a href="mailto:info@nesotechnology.com">info@nesotechnology.com</a></p>
     </div>
 
@@ -287,7 +345,7 @@
                 </select>
             </div>
 
-            <div class="helper-text" style="margin-bottom: 15px;">Please confirm the following criteria:</div>
+            <div class="helper-text" style="margin-bottom: 20px;">Please confirm the following criteria:</div>
 
             <div class="eligibility-box">
                 <label class="checkbox-label">
@@ -329,12 +387,12 @@
 
             <div class="form-group">
                 <label>6. What is your first name?</label>
-                <input type="text" name="first_name" placeholder="Type your answer...">
+                <input type="text" name="first_name" placeholder="Type your answer..." required>
             </div>
 
             <div class="form-group">
                 <label>7. What is your last name?</label>
-                <input type="text" name="last_name" placeholder="Type your answer...">
+                <input type="text" name="last_name" placeholder="Type your answer..." required>
             </div>
 
             <div class="form-group">
@@ -344,7 +402,7 @@
 
             <div class="form-group">
                 <label>9. What is your email address?</label>
-                <input type="email" name="email" placeholder="Type your answer...">
+                <input type="email" name="email" placeholder="name@example.com" required>
             </div>
 
             <div class="form-group">
@@ -354,6 +412,7 @@
 
             <div class="form-group">
                 <label>11. Can we text you at this phone number?</label>
+                <div class="helper-text">We may text you to ask for more information. We will not contact you for marketing purposes.</div>
                 <select name="can_text">
                     <option value="" disabled selected>Select an option</option>
                     <option value="Yes">Yes</option>
@@ -408,6 +467,25 @@
         <div class="wizard-step" id="step-5" data-name="Screening">
             <div class="section-header">Screening</div>
 
+            <div class="form-group">
+                <label>15. Are you registered with a GP?</label>
+                 <select name="registered_gp">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+             <div class="form-group">
+                <label>16. Are you currently being treated or have you ever been treated, for a psychiatric condition?</label>
+                <input type="text" name="psychiatric_condition" placeholder="Type your answer...">
+            </div>
+            
+             <div class="form-group">
+                <label>17. Is there any other medical information about yourself you want to tell us about?</label>
+                <textarea name="medical_info" placeholder="Type your answer..."></textarea>
+            </div>
+
             <div class="nav-buttons">
                 <button type="button" class="btn-back" onclick="prevStep()">Back</button>
                 <button type="button" class="btn-next" onclick="nextStep()">Next</button>
@@ -418,7 +496,7 @@
             <div class="section-header">Travel</div>
 
             <div class="form-group">
-                <label>15. What is your postcode?</label>
+                <label>18. What is your postcode?</label>
                 <input type="text" name="postcode" required placeholder="Type your answer...">
             </div>
 
