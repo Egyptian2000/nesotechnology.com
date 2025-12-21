@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neso Patient Registry</title>
+    <style>
+        /* --- CSS STYLING (Dark Mode / Neuralink Style) --- */
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --border-color: #333333;
+            --accent-color: #ffffff;
+            --error-color: #ff6b6b;
+            --success-color: #51cf66;
+            
+            /* New Colors for Eligibility Boxes */
+            --eligible-bg: #d1e7dd;      /* Pale Green */
+            --eligible-text: #0f5132;    /* Dark Green text */
+            --eligible-border: #badbcc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        /* LOGO STYLING */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-img {
+            max-width: 150px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* HEADLINE STYLING */
+        .intro-text {
+            font-size: 12px;
+            color: #cccccc;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .intro-text a {
+            color: var(--text-color);
+            text-decoration: underline;
+        }
+
+        /* WIZARD PROGRESS BAR */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+        
+        .progress-bar {
+            height: 2px;
+            background-color: var(--border-color);
+            width: 100%;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0%; /* JS will change this */
+            transition: width 0.3s ease;
+        }
+
+        .step-indicator {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* FORM FIELD STYLING */
+        .form-group {
+            margin-bottom: 30px;
+        }
+        
+        .section-header {
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--text-color);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .helper-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        input[type="text"], 
+        input[type="email"], 
+        input[type="tel"], 
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 0;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-size: 16px;
+            outline: none;
+            border-radius: 0;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 40px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-bottom-color: var(--accent-color);
+        }
+
+        /* SPECIAL ELIGIBILITY BOXES (Pale Green) */
+        .eligibility-box {
+            background-color: var(--eligible-bg);
+            border: 1px solid var(--eligible-border);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .eligibility-box .checkbox-label {
+            color: var(--eligible-text);
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
+        .eligibility-box input[type="checkbox"] {
+            accent-color: #0f5132;
+        }
+
+        /* STANDARD CHECKBOX STYLING */
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            text-transform: none;
+            color: var(--text-color);
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: var(--accent-color);
+        }
+
+        /* NAVIGATION BUTTONS */
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        button {
+            padding: 16px 32px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+
+        .btn-next {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        .btn-back {
+            background-color: transparent;
+            color: #888;
+            border: 1px solid #333;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* WIZARD STEP LOGIC */
+        .wizard-step {
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.4s ease;
+        }
+
+        .wizard-step.active {
+            display: block; /* Show active */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ERROR MESSAGE */
+        #error-message {
+            color: var(--error-color);
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+            text-align: center;
+            border: 1px solid var(--error-color);
+            padding: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="logo-container">
+        <img src="logo.png" alt="Neso Logo" class="logo-img">
+    </div>
+
+    <div class="intro-text">
+        <p>If you want to participate in non-invasive trials for methods to advance research into neurological conditions, sign up to our patient registry and we will be in touch if you're eligible for paid participation in our trials.</p>
+        <p>If you have any questions email <a href="mailto:info@nesotechnology.com">info@nesotechnology.com</a></p>
+    </div>
+
+    <div class="progress-container">
+        <div class="step-indicator">
+            <span id="step-text">Step 1 of 6</span>
+            <span id="section-name">Eligibility</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+    </div>
+
+    <form id="wizard-form" action="https://formspree.io/p/2897125611061378258/f/patient_registry" method="POST">
+        
+        <input type="hidden" name="_subject" value="New Neso Registry Submission" />
+
+        <div class="wizard-step active" id="step-1" data-name="Eligibility Check">
+            <div class="section-header">Eligibility Check</div>
+            
+            <div class="form-group">
+                <label>1. Are you filling this form out for yourself or someone else?</label>
+                <select name="applicant_type" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Myself">Myself</option>
+                    <option value="Someone else">Someone else</option>
+                </select>
+            </div>
+
+            <div class="helper-text" style="margin-bottom: 15px;">Please confirm the following criteria:</div>
+
+            <div class="eligibility-box">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="check_hearing" name="no_hearing_aids" value="Yes">
+                    I DO NOT wear a Hearing aid, Cochlear implant, or Middle ear prosthesis
+                </label>
+            </div>
+
+            <div class="eligibility-box">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="is_over_60" value="Yes">
+                    I AM aged over 60
+                </label>
+            </div>
+
+            <div class="form-group checkbox-group" style="margin-top: 30px;">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="has_alzheimers_dementia" value="Yes">
+                    I have / the applicant has Alzheimer's Disease or Dementia
+                </label>
+            </div>
+
+            <div class="form-group checkbox-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="has_adhd" value="Yes">
+                    I have / the applicant has ADHD
+                </label>
+            </div>
+
+            <div id="error-message">Those without hearing impairments are eligible to register.</div>
+
+            <div class="nav-buttons">
+                <button type="button" class="btn-next" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <div class="wizard-step" id="step-2" data-name="Contact Information">
+            <div class="section-header">Contact Information</div>
+
+            <div class="form-group">
+                <label>6. What is your first name?</label>
+                <input type="text" name="first_name" placeholder="Type your answer...">
+            </div>
+
+            <div class="form-group">
+                <label>7. What is your last name?</label>
+                <input type="text" name="last_name" placeholder="Type your answer...">
+            </div>
+
+            <div class="form-group">
+                <label>8. What is your relationship with the applicant?</label>
+                <input type="text" name="relationship_to_applicant" placeholder="Type your answer...">
+            </div>
+
+            <div class="form-group">
+                <label>9. What is your email address?</label>
+                <input type="email" name="email" placeholder="Type your answer...">
+            </div>
+
+            <div class="form-group">
+                <label>10. What is your phone number?</label>
+                <input type="tel" name="phone" placeholder="Type your answer...">
+            </div>
+
+            <div class="form-group">
+                <label>11. Can we text you at this phone number?</label>
+                <select name="can_text">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="nav-buttons">
+                <button type="button" class="btn-back" onclick="prevStep()">Back</button>
+                <button type="button" class="btn-next" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <div class="wizard-step" id="step-3" data-name="Personal Information">
+            <div class="section-header">Personal Information</div>
+
+            <div class="form-group">
+                <label>12. What is your date of birth?</label>
+                <input type="date" name="date_of_birth">
+            </div>
+
+            <div class="form-group">
+                <label>13. What is your biological sex?</label>
+                <select name="biological_sex">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="nav-buttons">
+                <button type="button" class="btn-back" onclick="prevStep()">Back</button>
+                <button type="button" class="btn-next" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <div class="wizard-step" id="step-4" data-name="Referrals">
+            <div class="section-header">Referrals</div>
+
+            <div class="form-group">
+                <label>14. Where did you hear about us? Please tell us the name of the person who referred you?</label>
+                <input type="text" name="referral_source" placeholder="Type your answer...">
+            </div>
+
+            <div class="nav-buttons">
+                <button type="button" class="btn-back" onclick="prevStep()">Back</button>
+                <button type="button" class="btn-next" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <div class="wizard-step" id="step-5" data-name="Screening">
+            <div class="section-header">Screening</div>
+
+            <div class="nav-buttons">
+                <button type="button" class="btn-back" onclick="prevStep()">Back</button>
+                <button type="button" class="btn-next" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <div class="wizard-step" id="step-6" data-name="Travel">
+            <div class="section-header">Travel</div>
+
+            <div class="form-group">
+                <label>15. What is your postcode?</label>
+                <input type="text" name="postcode" required placeholder="Type your answer...">
+            </div>
+
+            <div class="nav-buttons">
+                <button type="button" class="btn-back" onclick="prevStep()">Back</button>
+                <button type="submit" class="btn-next">Submit Application</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    let currentStep = 1;
+    const totalSteps = 6;
+
+    function showStep(stepNumber) {
+        // Hide all steps
+        const steps = document.querySelectorAll('.wizard-step');
+        steps.forEach(step => step.classList.remove('active'));
+
+        // Show current step
+        const activeStep = document.getElementById('step-' + stepNumber);
+        activeStep.classList.add('active');
+
+        // Update Progress Bar
+        const fillPercent = ((stepNumber - 1) / (totalSteps - 1)) * 100;
+        document.getElementById('progress-fill').style.width = fillPercent + '%';
+
+        // Update Text
+        document.getElementById('step-text').textContent = `Step ${stepNumber} of ${totalSteps}`;
+        document.getElementById('section-name').textContent = activeStep.getAttribute('data-name');
+    }
+
+    function nextStep() {
+        // 1. Validate Eligibility Logic (Step 1)
+        if (currentStep === 1) {
+            const hearingCheck = document.getElementById('check_hearing');
+            const errorMsg = document.getElementById('error-message');
+            
+            // Logic: Must check "No Hearing Aid" to proceed
+            if (!hearingCheck.checked) {
+                errorMsg.style.display = 'block';
+                return; // Stop here
+            } else {
+                errorMsg.style.display = 'none';
+            }
+            
+            // Basic HTML validation for Applicant Type
+            const typeInput = document.querySelector('select[name="applicant_type"]');
+            if (!typeInput.value) {
+                typeInput.reportValidity();
+                return;
+            }
+        }
+
+        // 2. Validate current step inputs (Standard HTML Required Check)
+        const currentStepEl = document.getElementById('step-' + currentStep);
+        const inputs = currentStepEl.querySelectorAll('input, select, textarea');
+        let isValid = true;
+        
+        // Only check "required" inputs that are visible
+        for (let input of inputs) {
+            if (input.hasAttribute('required') && !input.checkValidity()) {
+                input.reportValidity();
+                isValid = false;
+                break;
+            }
+        }
+
+        if (isValid) {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+                window.scrollTo(0, 0); // Scroll to top
+            }
+        }
+    }
+
+    function prevStep() {
+        if (currentStep > 1) {
+            currentStep--;
+            showStep(currentStep);
+            window.scrollTo(0, 0);
+        }
+    }
+</script>
+
+</body>
+</html>
