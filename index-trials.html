@@ -38,11 +38,12 @@
             color: var(--text-color);
             font-family: var(--font-family);
             margin: 0;
-            padding: 40px 20px;
+            /* REDUCED PADDING */
+            padding: 20px 15px; 
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.5; /* Slightly reduced line height */
         }
 
         .container {
@@ -54,10 +55,10 @@
         /* LOGO STYLING */
         .logo-container {
             text-align: center;
-            margin-bottom: 30px;
+            /* REDUCED MARGIN */
+            margin-bottom: 20px; 
         }
 
-        /* This link wraps the image to make it clickable */
         .logo-link {
             display: inline-block;
             text-decoration: none;
@@ -69,46 +70,41 @@
             height: auto;
             display: block;
             margin: 0 auto;
-            
-            /* FILTER EXPLANATION:
-               invert(0.6) turns White pixels into 60% Dark (Grey).
-               If you want it darker (closer to black), increase to 0.8 or 0.9.
-               If you want it lighter (silver), decrease to 0.4.
-            */
             filter: invert(0.6); 
-            
             transition: opacity 0.3s;
         }
 
         .logo-link:hover .logo-img {
-            opacity: 0.7; /* slight fade on hover */
+            opacity: 0.7;
         }
 
         /* HEADLINE STYLING */
         .intro-text {
             font-size: 16px;
-            color: var(--text-secondary); /* Dark Grey */
+            color: var(--text-secondary);
             text-align: center;
-            line-height: 1.6;
-            margin-bottom: 40px;
+            line-height: 1.5;
+            /* REDUCED MARGINS */
+            margin-bottom: 25px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 30px;
+            padding-bottom: 20px;
         }
 
         .intro-text a {
-            color: var(--text-color); /* Black */
+            color: var(--text-color);
             text-decoration: underline;
             text-underline-offset: 4px;
         }
 
         /* WIZARD PROGRESS BAR */
         .progress-container {
-            margin-bottom: 40px;
+            /* REDUCED MARGIN */
+            margin-bottom: 25px;
         }
         
         .progress-bar {
             height: 4px;
-            background-color: #e0e0e0; /* Light grey track */
+            background-color: #e0e0e0;
             width: 100%;
             position: relative;
             border-radius: 2px;
@@ -116,7 +112,7 @@
         
         .progress-fill {
             height: 100%;
-            background-color: var(--accent-color); /* Black fill */
+            background-color: var(--accent-color);
             width: 0%;
             transition: width 0.3s ease;
             border-radius: 2px;
@@ -135,12 +131,14 @@
 
         /* FORM FIELD STYLING */
         .form-group {
-            margin-bottom: 40px;
+            /* REDUCED MARGIN */
+            margin-bottom: 25px; 
         }
         
         .section-header {
             margin-top: 0;
-            margin-bottom: 30px;
+            /* REDUCED MARGIN */
+            margin-bottom: 20px; 
             font-size: 24px;
             font-weight: 600;
             color: var(--text-color);
@@ -148,9 +146,9 @@
 
         label {
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 8px; /* Reduced from 12 */
             font-size: 16px;
-            color: var(--text-secondary); /* Dark Grey */
+            color: var(--text-secondary);
             font-weight: 500;
         }
         
@@ -159,7 +157,7 @@
             color: var(--text-muted);
             margin-top: -5px;
             margin-bottom: 15px;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         /* INPUTS - BLACK TEXT ON WHITE */
@@ -170,11 +168,11 @@
         textarea,
         select {
             width: 100%;
-            padding: 16px 0;
+            padding: 12px 0; /* Reduced padding slightly */
             background-color: transparent;
             border: none;
             border-bottom: 2px solid var(--border-color);
-            color: var(--text-color); /* Black Text */
+            color: var(--text-color);
             font-size: 18px;
             outline: none;
             border-radius: 0;
@@ -202,7 +200,7 @@
         .eligibility-box {
             background-color: var(--eligible-bg);
             border: 1px solid var(--eligible-border);
-            padding: 20px;
+            padding: 15px; /* Reduced padding */
             border-radius: 6px;
             margin-bottom: 20px;
         }
@@ -226,7 +224,7 @@
             text-transform: none;
             color: var(--text-color);
             font-size: 16px;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         input[type="checkbox"] {
@@ -242,7 +240,7 @@
         .nav-buttons {
             display: flex;
             gap: 15px;
-            margin-top: 50px;
+            margin-top: 40px; /* Reduced margin */
         }
 
         button {
@@ -258,8 +256,8 @@
         }
 
         .btn-next {
-            background-color: var(--accent-color); /* Black Button */
-            color: #ffffff; /* White Text */
+            background-color: var(--accent-color);
+            color: #ffffff;
         }
 
         .btn-back {
@@ -311,8 +309,9 @@
 
         /* MOBILE OPTIMIZATION */
         @media (max-width: 600px) {
-            body { padding: 20px 15px; }
-            .section-header { font-size: 22px; }
+            body { padding: 15px 10px; }
+            .section-header { font-size: 20px; }
+            .intro-text { font-size: 14px; margin-bottom: 20px;}
             input[type="text"], input[type="email"], input[type="tel"] { font-size: 16px; }
         }
 
@@ -328,9 +327,9 @@
         </a>
     </div>
 
-    <div class="intro-text">
-        <p>If you want to participate in non-invasive trials for methods to advance research into neurological conditions, sign up to our patient registry and we will be in touch if you're eligible for paid participation in our trials.</p>
-        <p>If you have any questions email <a href="mailto:info@nesotechnology.com">info@nesotechnology.com</a></p>
+    <div class="intro-text" id="main-intro">
+        <p>Help advance research into neurological conditions, sign up to our patient registry and we will be in touch if you're eligible for paid participation in our non-invasive trials.</p>
+        <p>Email <a href="mailto:info@nesotechnology.com">info@nesotechnology.com</a></p>
     </div>
 
     <div class="progress-container">
@@ -364,18 +363,18 @@
             <div class="eligibility-box">
                 <label class="checkbox-label">
                     <input type="checkbox" id="check_hearing" name="no_hearing_aids" value="Yes">
-                    I DO NOT wear a Hearing aid, Cochlear implant, or Middle ear prosthesis
+                    I DO NOT / the applicant DOES NOT wear a Hearing aid, Cochlear implant, or Middle ear prosthesis
                 </label>
             </div>
 
-            <div class="eligibility-box">
+            <div class="form-group checkbox-group">
                 <label class="checkbox-label">
                     <input type="checkbox" name="is_over_60" value="Yes">
-                    I AM aged over 60
+                    I AM / the applicant is aged over 60
                 </label>
             </div>
 
-            <div class="form-group checkbox-group" style="margin-top: 30px;">
+            <div class="form-group checkbox-group">
                 <label class="checkbox-label">
                     <input type="checkbox" name="has_alzheimers_dementia" value="Yes">
                     I have / the applicant has Alzheimer's Disease or Dementia
@@ -410,22 +409,27 @@
             </div>
 
             <div class="form-group">
-                <label>8. What is your relationship with the applicant?</label>
+                <label>8. What is the applicant's full name (leave blank if applying yourself)?</label>
+                <input type="text" name="applicant_full_name" placeholder="Type your answer...">
+            </div>
+
+            <div class="form-group">
+                <label>9. What is your relationship with the applicant? (leave blank if applying yourself) </label>
                 <input type="text" name="relationship_to_applicant" placeholder="Type your answer...">
             </div>
 
             <div class="form-group">
-                <label>9. What is your email address?</label>
+                <label>10. What is your email address?</label>
                 <input type="email" name="email" placeholder="name@example.com" required>
             </div>
 
             <div class="form-group">
-                <label>10. What is your phone number?</label>
+                <label>11. What is your phone number?</label>
                 <input type="tel" name="phone" placeholder="Type your answer...">
             </div>
 
             <div class="form-group">
-                <label>11. Can we text you at this phone number?</label>
+                <label>12. Can we text you at this phone number?</label>
                 <div class="helper-text">We may text you to ask for more information. We will not contact you for marketing purposes.</div>
                 <select name="can_text">
                     <option value="" disabled selected>Select an option</option>
@@ -444,12 +448,12 @@
             <div class="section-header">Personal Information</div>
 
             <div class="form-group">
-                <label>12. What is your date of birth?</label>
+                <label>13. What is your date of birth?</label>
                 <input type="date" name="date_of_birth">
             </div>
 
             <div class="form-group">
-                <label>13. What is your biological sex?</label>
+                <label>14. What is your biological sex?</label>
                 <select name="biological_sex">
                     <option value="" disabled selected>Select an option</option>
                     <option value="Male">Male</option>
@@ -468,7 +472,7 @@
             <div class="section-header">Referrals</div>
 
             <div class="form-group">
-                <label>14. Where did you hear about us? Please tell us the name of the person who referred you?</label>
+                <label>15. Where did you hear about us? Please tell us the name of the person who referred you?</label>
                 <input type="text" name="referral_source" placeholder="Type your answer...">
             </div>
 
@@ -482,7 +486,7 @@
             <div class="section-header">Screening</div>
 
             <div class="form-group">
-                <label>15. Are you registered with a GP?</label>
+                <label>16. Are you registered with a GP?</label>
                  <select name="registered_gp">
                     <option value="" disabled selected>Select an option</option>
                     <option value="Yes">Yes</option>
@@ -491,12 +495,12 @@
             </div>
 
              <div class="form-group">
-                <label>16. Are you currently being treated or have you ever been treated, for a psychiatric condition?</label>
+                <label>17. Are you currently being treated or have you ever been treated, for a psychiatric condition?</label>
                 <input type="text" name="psychiatric_condition" placeholder="Type your answer...">
             </div>
             
              <div class="form-group">
-                <label>17. Is there any other medical information about yourself you want to tell us about?</label>
+                <label>18. Is there any other medical information about yourself you want to tell us about?</label>
                 <textarea name="medical_info" placeholder="Type your answer..."></textarea>
             </div>
 
@@ -510,7 +514,7 @@
             <div class="section-header">Travel</div>
 
             <div class="form-group">
-                <label>18. What is your postcode?</label>
+                <label>19. What is your postcode?</label>
                 <input type="text" name="postcode" required placeholder="Type your answer...">
             </div>
 
@@ -543,6 +547,14 @@
         // Update Text
         document.getElementById('step-text').textContent = `Step ${stepNumber} of ${totalSteps}`;
         document.getElementById('section-name').textContent = activeStep.getAttribute('data-name');
+        
+        // --- LOGIC CHANGE: HIDE INTRO TEXT AFTER STEP 1 ---
+        const introText = document.getElementById('main-intro');
+        if (stepNumber > 1) {
+            introText.style.display = 'none';
+        } else {
+            introText.style.display = 'block';
+        }
     }
 
     function nextStep() {
